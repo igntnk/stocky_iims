@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	EnvPrefix = "AUTH"
+	EnvPrefix = "IIMS"
 )
 
 type Config struct {

@@ -52,6 +52,7 @@ func Init(ctx context.Context, db *mongo.Database, isReplicaSet bool, logger zer
 		productService = service.NewProductService(logger, productRepo)
 	)
 
+	grpcServer = grpc.NewServer()
 	grpcapp.RegisterSaleServer(grpcServer, logger, saleService)
 	grpcapp.RegisterProductServer(grpcServer, logger, productService)
 
