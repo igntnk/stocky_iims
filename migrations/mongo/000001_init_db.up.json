@@ -1,0 +1,39 @@
+[
+  {
+    "update": "products",
+    "updates": [
+      {
+        "q": { "_id":  { "$oid":  "000000000000000000000000"}},
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid":  "000000000000000000000000"},
+            "name": "superProduct",
+            "description": "superDescription",
+            "creation_date": "",
+            "blocked": false
+          }
+        },
+        "upsert": true
+      }
+    ]
+  },
+  {
+    "update": "sales",
+    "updates": [
+      {
+        "q": { "_id":  { "$oid":  "000000000000000000000000"}},
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid":  "000000000000000000000000"},
+            "name": "superSale",
+            "description": "sale on the super event",
+            "sale_size": "100",
+            "product": "000000000000000000000000",
+            "blocked": false
+          }
+        },
+        "upsert": true
+      }
+    ]
+  }
+]

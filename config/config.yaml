@@ -1,0 +1,20 @@
+database:
+  healthcheck_timeout: 10
+  uri: ""
+  database: ""
+  migrations_path: "migrations/mongo"
+  clientOptions:
+    connectTimeout: 30s
+    auth:
+      authSource: ""
+      username: ""
+      password: ""
+server:
+  host: ""
+  grpc_port: ""
+  request_timeout: 10
+  insert_duration: 4
+  path_to_data: "./input/"
+
+
+
