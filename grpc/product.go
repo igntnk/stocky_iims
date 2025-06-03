@@ -43,6 +43,12 @@ func (s *productServer) Get(ctx context.Context, req *iims_pb.GetProductsRequest
 	return result, nil
 }
 
+func (s *productServer) GetById(ctx context.Context, req *iims_pb.GetByIdProductRequest) (*iims_pb.GetProductMessage, error) {
+	s.Logger.Debug().Msg("Get Product")
+
+	result, err := s.ProductService.GetById(ctx, req)
+}
+
 func (s *productServer) Delete(ctx context.Context, req *iims_pb.DeleteProductRequest) (*emptypb.Empty, error) {
 	s.Logger.Debug().Msg("Delete Product")
 

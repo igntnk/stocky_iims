@@ -13,6 +13,7 @@ import (
 type ProductService interface {
 	InsertOne(context.Context, *pb.InsertProductRequest) (*pb.InsertProductResponse, error)
 	Get(context.Context, *pb.GetProductsRequest) (*pb.GetProductsResponse, error)
+	GetById(context.Context, *pb.GetByIdProductRequest) (*pb.GetProductMessage, error)
 	Delete(context.Context, *pb.DeleteProductRequest) error
 	Update(context.Context, *pb.UpdateProductRequest) error
 	BlockProduct(context.Context, *pb.BlockProductOperationMessage) error
@@ -66,6 +67,21 @@ func (p productService) Get(ctx context.Context, request *pb.GetProductsRequest)
 
 	return &pb.GetProductsResponse{
 		Products: productsMessage,
+	}, nil
+}
+
+func (p productService) GetById(ctx context.Context, request *pb.GetByIdProductRequest) (*pb.GetProductMessage, error) {
+	res, err := p.repo.GetById(ctx, request.GetId())
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.GetProductMessage{
+		Id:           res.Id,
+		Name:         res.Name,
+		Description:  res.Description,
+		CreationDate: res.CreationDate,
+		Price:        res.Price,
 	}, nil
 }
 

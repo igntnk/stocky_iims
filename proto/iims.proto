@@ -9,6 +9,7 @@ option go_package = "github.com/igntnk/stocky_iims/proto/pb";
 service ProductService {
   rpc InsertOne(InsertProductRequest) returns (InsertProductResponse) {};
   rpc Get(GetProductsRequest) returns (GetProductsResponse) {};
+  rpc GetById(GetByIdProductRequest) returns (GetProductMessage) {};
   rpc Delete(DeleteProductRequest) returns (google.protobuf.Empty) {};
   rpc Update(UpdateProductRequest) returns (google.protobuf.Empty) {};
   rpc BlockProduct(BlockProductOperationMessage) returns (google.protobuf.Empty) {};
@@ -20,6 +21,10 @@ message InsertProductRequest {
   string Description = 2;
   string CreationDate = 3;
   float Price = 4;
+}
+
+message GetByIdProductRequest{
+  string id = 1;
 }
 
 message InsertProductResponse {

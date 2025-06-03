@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	ProductService_InsertOne_FullMethodName      = "/uas.ProductService/InsertOne"
 	ProductService_Get_FullMethodName            = "/uas.ProductService/Get"
+	ProductService_GetById_FullMethodName        = "/uas.ProductService/GetById"
 	ProductService_Delete_FullMethodName         = "/uas.ProductService/Delete"
 	ProductService_Update_FullMethodName         = "/uas.ProductService/Update"
 	ProductService_BlockProduct_FullMethodName   = "/uas.ProductService/BlockProduct"
@@ -34,6 +35,7 @@ const (
 type ProductServiceClient interface {
 	InsertOne(ctx context.Context, in *InsertProductRequest, opts ...grpc.CallOption) (*InsertProductResponse, error)
 	Get(ctx context.Context, in *GetProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error)
+	GetById(ctx context.Context, in *GetByIdProductRequest, opts ...grpc.CallOption) (*GetProductMessage, error)
 	Delete(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	BlockProduct(ctx context.Context, in *BlockProductOperationMessage, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -62,6 +64,16 @@ func (c *productServiceClient) Get(ctx context.Context, in *GetProductsRequest, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetProductsResponse)
 	err := c.cc.Invoke(ctx, ProductService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productServiceClient) GetById(ctx context.Context, in *GetByIdProductRequest, opts ...grpc.CallOption) (*GetProductMessage, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetProductMessage)
+	err := c.cc.Invoke(ctx, ProductService_GetById_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,6 +126,7 @@ func (c *productServiceClient) UnblockProduct(ctx context.Context, in *BlockProd
 type ProductServiceServer interface {
 	InsertOne(context.Context, *InsertProductRequest) (*InsertProductResponse, error)
 	Get(context.Context, *GetProductsRequest) (*GetProductsResponse, error)
+	GetById(context.Context, *GetByIdProductRequest) (*GetProductMessage, error)
 	Delete(context.Context, *DeleteProductRequest) (*emptypb.Empty, error)
 	Update(context.Context, *UpdateProductRequest) (*emptypb.Empty, error)
 	BlockProduct(context.Context, *BlockProductOperationMessage) (*emptypb.Empty, error)
@@ -133,6 +146,9 @@ func (UnimplementedProductServiceServer) InsertOne(context.Context, *InsertProdu
 }
 func (UnimplementedProductServiceServer) Get(context.Context, *GetProductsRequest) (*GetProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedProductServiceServer) GetById(context.Context, *GetByIdProductRequest) (*GetProductMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetById not implemented")
 }
 func (UnimplementedProductServiceServer) Delete(context.Context, *DeleteProductRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
@@ -199,6 +215,24 @@ func _ProductService_Get_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductServiceServer).Get(ctx, req.(*GetProductsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductService_GetById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByIdProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServiceServer).GetById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductService_GetById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServiceServer).GetById(ctx, req.(*GetByIdProductRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -289,6 +323,10 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Get",
 			Handler:    _ProductService_Get_Handler,
+		},
+		{
+			MethodName: "GetById",
+			Handler:    _ProductService_GetById_Handler,
 		},
 		{
 			MethodName: "Delete",
