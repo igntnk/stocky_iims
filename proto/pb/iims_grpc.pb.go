@@ -20,13 +20,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ProductService_InsertOne_FullMethodName      = "/uas.ProductService/InsertOne"
-	ProductService_Get_FullMethodName            = "/uas.ProductService/Get"
-	ProductService_GetById_FullMethodName        = "/uas.ProductService/GetById"
-	ProductService_Delete_FullMethodName         = "/uas.ProductService/Delete"
-	ProductService_Update_FullMethodName         = "/uas.ProductService/Update"
-	ProductService_BlockProduct_FullMethodName   = "/uas.ProductService/BlockProduct"
-	ProductService_UnblockProduct_FullMethodName = "/uas.ProductService/UnblockProduct"
+	ProductService_InsertOne_FullMethodName        = "/iims.ProductService/InsertOne"
+	ProductService_Get_FullMethodName              = "/iims.ProductService/Get"
+	ProductService_GetById_FullMethodName          = "/iims.ProductService/GetById"
+	ProductService_GetByProductCode_FullMethodName = "/iims.ProductService/GetByProductCode"
+	ProductService_Delete_FullMethodName           = "/iims.ProductService/Delete"
+	ProductService_Update_FullMethodName           = "/iims.ProductService/Update"
+	ProductService_BlockProduct_FullMethodName     = "/iims.ProductService/BlockProduct"
+	ProductService_UnblockProduct_FullMethodName   = "/iims.ProductService/UnblockProduct"
 )
 
 // ProductServiceClient is the client API for ProductService service.
@@ -36,6 +37,7 @@ type ProductServiceClient interface {
 	InsertOne(ctx context.Context, in *InsertProductRequest, opts ...grpc.CallOption) (*InsertProductResponse, error)
 	Get(ctx context.Context, in *GetProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error)
 	GetById(ctx context.Context, in *GetByIdProductRequest, opts ...grpc.CallOption) (*GetProductMessage, error)
+	GetByProductCode(ctx context.Context, in *GetByProductCodeRequest, opts ...grpc.CallOption) (*GetProductMessage, error)
 	Delete(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	BlockProduct(ctx context.Context, in *BlockProductOperationMessage, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -74,6 +76,16 @@ func (c *productServiceClient) GetById(ctx context.Context, in *GetByIdProductRe
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetProductMessage)
 	err := c.cc.Invoke(ctx, ProductService_GetById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productServiceClient) GetByProductCode(ctx context.Context, in *GetByProductCodeRequest, opts ...grpc.CallOption) (*GetProductMessage, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetProductMessage)
+	err := c.cc.Invoke(ctx, ProductService_GetByProductCode_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -127,6 +139,7 @@ type ProductServiceServer interface {
 	InsertOne(context.Context, *InsertProductRequest) (*InsertProductResponse, error)
 	Get(context.Context, *GetProductsRequest) (*GetProductsResponse, error)
 	GetById(context.Context, *GetByIdProductRequest) (*GetProductMessage, error)
+	GetByProductCode(context.Context, *GetByProductCodeRequest) (*GetProductMessage, error)
 	Delete(context.Context, *DeleteProductRequest) (*emptypb.Empty, error)
 	Update(context.Context, *UpdateProductRequest) (*emptypb.Empty, error)
 	BlockProduct(context.Context, *BlockProductOperationMessage) (*emptypb.Empty, error)
@@ -149,6 +162,9 @@ func (UnimplementedProductServiceServer) Get(context.Context, *GetProductsReques
 }
 func (UnimplementedProductServiceServer) GetById(context.Context, *GetByIdProductRequest) (*GetProductMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetById not implemented")
+}
+func (UnimplementedProductServiceServer) GetByProductCode(context.Context, *GetByProductCodeRequest) (*GetProductMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetByProductCode not implemented")
 }
 func (UnimplementedProductServiceServer) Delete(context.Context, *DeleteProductRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
@@ -237,6 +253,24 @@ func _ProductService_GetById_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductService_GetByProductCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByProductCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServiceServer).GetByProductCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductService_GetByProductCode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServiceServer).GetByProductCode(ctx, req.(*GetByProductCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ProductService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteProductRequest)
 	if err := dec(in); err != nil {
@@ -313,7 +347,7 @@ func _ProductService_UnblockProduct_Handler(srv interface{}, ctx context.Context
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProductService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "uas.ProductService",
+	ServiceName: "iims.ProductService",
 	HandlerType: (*ProductServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -327,6 +361,10 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetById",
 			Handler:    _ProductService_GetById_Handler,
+		},
+		{
+			MethodName: "GetByProductCode",
+			Handler:    _ProductService_GetByProductCode_Handler,
 		},
 		{
 			MethodName: "Delete",
@@ -350,12 +388,12 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	SaleService_InsertOne_FullMethodName   = "/uas.SaleService/InsertOne"
-	SaleService_Get_FullMethodName         = "/uas.SaleService/Get"
-	SaleService_Delete_FullMethodName      = "/uas.SaleService/Delete"
-	SaleService_Update_FullMethodName      = "/uas.SaleService/Update"
-	SaleService_BlockSale_FullMethodName   = "/uas.SaleService/BlockSale"
-	SaleService_UnblockSale_FullMethodName = "/uas.SaleService/UnblockSale"
+	SaleService_InsertOne_FullMethodName   = "/iims.SaleService/InsertOne"
+	SaleService_Get_FullMethodName         = "/iims.SaleService/Get"
+	SaleService_Delete_FullMethodName      = "/iims.SaleService/Delete"
+	SaleService_Update_FullMethodName      = "/iims.SaleService/Update"
+	SaleService_BlockSale_FullMethodName   = "/iims.SaleService/BlockSale"
+	SaleService_UnblockSale_FullMethodName = "/iims.SaleService/UnblockSale"
 )
 
 // SaleServiceClient is the client API for SaleService service.
@@ -609,7 +647,7 @@ func _SaleService_UnblockSale_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SaleService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "uas.SaleService",
+	ServiceName: "iims.SaleService",
 	HandlerType: (*SaleServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

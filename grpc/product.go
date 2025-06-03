@@ -47,6 +47,24 @@ func (s *productServer) GetById(ctx context.Context, req *iims_pb.GetByIdProduct
 	s.Logger.Debug().Msg("Get Product")
 
 	result, err := s.ProductService.GetById(ctx, req)
+	if err != nil {
+		s.Logger.Error().Err(err).Msg("ProductService GetById error")
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (s *productServer) GetByProductCode(ctx context.Context, req *iims_pb.GetByProductCodeRequest) (*iims_pb.GetProductMessage, error) {
+	s.Logger.Debug().Msg("Get Product")
+
+	result, err := s.ProductService.GetByProductCode(ctx, req)
+	if err != nil {
+		s.Logger.Error().Err(err).Msg("ProductService GetById error")
+		return nil, err
+	}
+
+	return result, nil
 }
 
 func (s *productServer) Delete(ctx context.Context, req *iims_pb.DeleteProductRequest) (*emptypb.Empty, error) {
