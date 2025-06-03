@@ -1,0 +1,152 @@
+[
+  {
+    "update": "products",
+    "updates": [
+      {
+        "q": { "_id": { "$oid": "650000000000000000000001" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "650000000000000000000001" },
+            "name": "Wireless Mouse",
+            "product_code": "10000000-0000-0000-0000-000000000001",
+            "description": "Универсальный и надежный Wireless Mouse для любых задач.",
+            "creation_date": "2025-01-15T09:30:00Z",
+            "blocked": false
+          }
+        },
+        "upsert": true
+      },
+      {
+        "q": { "_id": { "$oid": "650000000000000000000002" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "650000000000000000000002" },
+            "name": "USB Keyboard",
+            "product_code": "10000000-0000-0000-0000-000000000002",
+            "description": "Современный USB Keyboard с расширенным функционалом.",
+            "creation_date": "2025-02-20T14:00:00Z",
+            "blocked": false
+          }
+        },
+        "upsert": true
+      },
+      {
+        "q": { "_id": { "$oid": "650000000000000000000003" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "650000000000000000000003" },
+            "name": "HD Monitor",
+            "product_code": "10000000-0000-0000-0000-000000000003",
+            "description": "Надежное устройство HD Monitor для повседневного использования.",
+            "creation_date": "2025-03-10T11:15:00Z",
+            "blocked": false
+          }
+        },
+        "upsert": true
+      },
+      {
+        "q": { "_id": { "$oid": "650000000000000000000004" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "650000000000000000000004" },
+            "name": "Laptop Stand",
+            "product_code": "10000000-0000-0000-0000-000000000004",
+            "description": "Высококачественный Laptop Stand для профессионалов.",
+            "creation_date": "2025-04-05T16:45:00Z",
+            "blocked": false
+          }
+        },
+        "upsert": true
+      },
+      {
+        "q": { "_id": { "$oid": "650000000000000000000005" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "650000000000000000000005" },
+            "name": "USB-C Hub",
+            "product_code": "10000000-0000-0000-0000-000000000005",
+            "description": "Эффективный USB-C Hub для дома и офиса.",
+            "creation_date": "2025-05-22T08:00:00Z",
+            "blocked": false
+          }
+        },
+        "upsert": true
+      }
+    ]
+  },
+  {
+    "update": "sales",
+    "updates": [
+      {
+        "q": { "_id": { "$oid": "660000000000000000000001" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "660000000000000000000001" },
+            "name": "Скидка на Wireless Mouse",
+            "description": "Акция на Wireless Mouse, скидка 20%",
+            "sale_size": 20,
+            "product": { "$oid": "650000000000000000000001" },
+            "blocked": false
+          }
+        },
+        "upsert": true
+      },
+      {
+        "q": { "_id": { "$oid": "660000000000000000000002" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "660000000000000000000002" },
+            "name": "Скидка на USB Keyboard",
+            "description": "Акция на USB Keyboard, скидка 15%",
+            "sale_size": 15,
+            "product": { "$oid": "650000000000000000000002" },
+            "blocked": false
+          }
+        },
+        "upsert": true
+      },
+      {
+        "q": { "_id": { "$oid": "660000000000000000000003" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "660000000000000000000003" },
+            "name": "Скидка на HD Monitor",
+            "description": "Акция на HD Monitor, скидка 30%",
+            "sale_size": 30,
+            "product": { "$oid": "650000000000000000000003" },
+            "blocked": false
+          }
+        },
+        "upsert": true
+      },
+      {
+        "q": { "_id": { "$oid": "660000000000000000000004" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "660000000000000000000004" },
+            "name": "Скидка на Laptop Stand",
+            "description": "Акция на Laptop Stand, скидка 10%",
+            "sale_size": 10,
+            "product": { "$oid": "650000000000000000000004" },
+            "blocked": false
+          }
+        },
+        "upsert": true
+      },
+      {
+        "q": { "_id": { "$oid": "660000000000000000000005" } },
+        "u": {
+          "$setOnInsert": {
+            "_id": { "$oid": "660000000000000000000005" },
+            "name": "Скидка на USB-C Hub",
+            "description": "Акция на USB-C Hub, скидка 25%",
+            "sale_size": 25,
+            "product": { "$oid": "650000000000000000000005" },
+            "blocked": false
+          }
+        },
+        "upsert": true
+      }
+    ]
+  }
+]
