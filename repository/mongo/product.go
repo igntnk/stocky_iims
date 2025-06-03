@@ -73,6 +73,33 @@ func (r *productRepository) Get(ctx context.Context, limit, offset int64) ([]mod
 	return products, nil
 }
 
+func (r *productRepository) GetById(ctx context.Context, id string) (models.Product, error) {
+	product := models.Product{}
+
+	idObj, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return product, err
+	}
+
+	err = r.ProductCollection.FindOne(ctx, bson.M{"_id": idObj}).Decode(&product)
+	if err != nil {
+		return product, err
+	}
+
+	return product, nil
+}
+
+func (r *productRepository) GetByProductCode(ctx context.Context, code string) (models.Product, error) {
+	product := models.Product{}
+
+	err := r.ProductCollection.FindOne(ctx, bson.M{"product_code": code}).Decode(&product)
+	if err != nil {
+		return product, err
+	}
+
+	return product, nil
+}
+
 func (r *productRepository) Delete(ctx context.Context, id string) error {
 	idObj, err := primitive.ObjectIDFromHex(id)
 	if err != nil {

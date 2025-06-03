@@ -11,7 +11,8 @@
             "product_code": "10000000-0000-0000-0000-000000000001",
             "description": "Универсальный и надежный Wireless Mouse для любых задач.",
             "creation_date": "2025-01-15T09:30:00Z",
-            "blocked": false
+            "blocked": false,
+            "price": 24.99
           }
         },
         "upsert": true
@@ -25,7 +26,8 @@
             "product_code": "10000000-0000-0000-0000-000000000002",
             "description": "Современный USB Keyboard с расширенным функционалом.",
             "creation_date": "2025-02-20T14:00:00Z",
-            "blocked": false
+            "blocked": false,
+            "price": 49.99
           }
         },
         "upsert": true
@@ -39,7 +41,8 @@
             "product_code": "10000000-0000-0000-0000-000000000003",
             "description": "Надежное устройство HD Monitor для повседневного использования.",
             "creation_date": "2025-03-10T11:15:00Z",
-            "blocked": false
+            "blocked": false,
+            "price": 199.99
           }
         },
         "upsert": true
@@ -53,7 +56,8 @@
             "product_code": "10000000-0000-0000-0000-000000000004",
             "description": "Высококачественный Laptop Stand для профессионалов.",
             "creation_date": "2025-04-05T16:45:00Z",
-            "blocked": false
+            "blocked": false,
+            "price": 34.99
           }
         },
         "upsert": true
@@ -67,7 +71,8 @@
             "product_code": "10000000-0000-0000-0000-000000000005",
             "description": "Эффективный USB-C Hub для дома и офиса.",
             "creation_date": "2025-05-22T08:00:00Z",
-            "blocked": false
+            "blocked": false,
+            "price": 29.99
           }
         },
         "upsert": true
