@@ -33,11 +33,6 @@ func main() {
 		isReplicaSet = true
 	}
 
-	err = setup.SetupDefaultData(ctx, db)
-	if err != nil {
-		logger.Fatal().Err(err).Msg("")
-	}
-
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
